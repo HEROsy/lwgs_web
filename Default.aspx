@@ -194,21 +194,84 @@
     </style>
 
     <script type="text/javascript">
-        /*招工信息：json_zgxx 字段：id titles bclass sclass
-        *通知公告：json_tzgg 字段：id titles bclass sclass
-        *法律法规：json_flfg 字段：id titles bclass sclass
+        /*招工信息：json_zgxx 字段：id titles bclass sclass fbtimes
+        *通知公告：json_tzgg 字段：id titles bclass sclass fbtimes
+        *法律法规：json_flfg 字段：id titles bclass sclass  fbtimes
         *以上新闻标题链接地址：web_newsshow.aspx?bid=bclass&sid=sclass&nid=id
         *
         *
         */
-
+        var json_zgxx;
+        var json_tzgg;
+        var json_flfg;
+        var html;
         window.onload = function () {
+            html = "";
+            zgxx();
+            tzgg();
+            flfg();
+        }
+       
+        function decode(str) {
+            str = decodeURIComponent(str.replace(/\+/g, '%20'));
+            return str;
+        }
 
+        function zgxx() {
+            json_zgxx = document.getElementById("json_zg").value;
+            var sel_id = document.getElementById("zgxx");
+                try {
+                var data = eval("(" + json_zgxx + ")");
+                } catch (e) {
+
+                } 
+            html="";
+            for (var i = 0; i < data.length; i++) {
+                html = html + "<div class='zg' onmouseover='this.style.cursor='pointer'' onclick=window.location.href='web_newsshow.aspx?bid=" + decode(data[i].bclass) + "&sid=" + decode(data[i].sclass) + "&nid=" + decode(data[i].id) + "'>"
+                                + "<span class='zg1'>" + (i + 1) + "</span><div class='zgn'><span class='zg2'>" + decode(data[i].titles) + "</span>"
+                                + "<span class='zg3'>" + decode(data[i].fbtimes) + "</span></div></div>";
+            }
+            sel_id.innerHTML = html;
+        }
+
+        function tzgg() {
+            json_tzgg = document.getElementById("json_tz").value;
+            var sel_id = document.getElementById("tzgg");
+            try {
+                var data = eval("(" + json_tzgg + ")");
+            } catch (e) {
+
+            }
+            html = "";
+            for (var i = 0; i < data.length; i++) {
+                html = html + "<div class='tz' onmouseover='this.style.cursor='pointer'' onclick=window.location.href='web_newsshow.aspx?bid=" + decode(data[i].bclass) + "&sid=" + decode(data[i].sclass) + "&nid=" + decode(data[i].id) + "'>"
+                          + "<span class='tz1'>" + (i + 1) + "</span><div class='tzn'><span class='tz2'>" + decode(data[i].titles) + "</span><span class='tz3'>" + decode(data[i].fbtimes) + "</span></div></div>";
+            }
+            sel_id.innerHTML = html;
+        }
+
+        function flfg() {
+            json_flfg = document.getElementById("json_fl").value;
+            var sel_id = document.getElementById("flfg");
+            try {
+                var data = eval("(" + json_flfg + ")");
+            } catch (e) {
+
+            }
+            html = "";
+            for (var i = 0; i < data.length; i++) {
+                html = html + "<div class='bt' onmouseover='this.style.cursor='pointer'' onclick=window.location.href='web_newsshow.aspx?bid=" + decode(data[i].bclass) + "&sid=" + decode(data[i].sclass) + "&nid=" + decode(data[i].id) + "'>"
+                              + "<span class='bbt'></span><div class='tzn'><span class='tz2'>" + decode(data[i].titles) + "</span>"
+                              + "<span class='tz3'>" + decode(data[i].fbtimes) + "</span></div></div>";
+            }
+            sel_id.innerHTML = html;
         }
     </script>
 </head>
-
 <body>
+    <input type="hidden" id="json_zg" value="<%=json_zgxx %>" />;
+    <input type="hidden" id="json_tz" value="<%=json_tzgg %>" />;
+    <input type="hidden" id="json_fl" value="<%=json_flfg %>" />;
     <uc1:web_head runat="server" ID="web_head" />
     <div style="width: 1000px; margin: auto">
          <%--招工信息列表--%>
@@ -225,17 +288,8 @@
                 <div class="span6">
                     <img src="img/zgleft.jpg" />
                 </div>
-                <div class="span6">
-                    <div class="zg" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><span class="zg1">1</span><div class="zgn"><span class="zg2">这里是标题是标题是标题这里是标题是标题是标题这里是标题是标题是标题</span><span class="zg3">2015/12/12</span></div>
-                    </div>
-                    <div class="zg" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><span class="zg1">2</span><div class="zgn"><span class="zg2">这里是标题是标题是标题</span><span class="zg3">2015/12/12</span></div>
-                    </div>
-                    <div class="zg" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><span class="zg1">3</span><div class="zgn"><span class="zg2">这里是标题是标题是标题</span><span class="zg3">2015/12/12</span></div>
-                    </div>
-                    <div class="zg" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><span class="zg1">4</span><div class="zgn"><span class="zg2">这里是标题是标题是标题</span><span class="zg3">2015/12/12</span></div>
-                    </div>
-                    <div class="zg" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><span class="zg1">5</span><div class="zgn"><span class="zg2">这里是标题是标题是标题</span><span class="zg3">2015/12/12</span></div>
-                    </div>
+                <div class="span6" id="zgxx">
+                   
                 </div>
             </div>
         </div>
@@ -252,22 +306,8 @@
             </div>
 
             <div class="row-fluid" style="margin-top: 30px">
-                <div class="span6">
-                    <div class="tz" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">
-                        <span class="tz1">1</span><div class="tzn"><span class="tz2">这里是标题是标题是标题这里是标题是标题是标题这里是标题是标题是标题</span><span class="tz3">2015/12/12</span></div>
-                    </div>
-                    <div class="tz" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">
-                        <span class="tz1">2</span><div class="tzn"><span class="tz2">这里是标题是标题是标题</span><span class="tz3">2015/12/12</span></div>
-                    </div>
-                    <div class="tz" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">
-                        <span class="tz1">3</span><div class="tzn"><span class="tz2">这里是标题是标题是标题</span><span class="tz3">2015/12/12</span></div>
-                    </div>
-                    <div class="tz" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">
-                        <span class="tz1">4</span><div class="tzn"><span class="tz2">这里是标题是标题是标题</span><span class="tz3">2015/12/12</span></div>
-                    </div>
-                    <div class="tz" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">
-                        <span class="tz1">5</span><div class="tzn"><span class="tz2">这里是标题是标题是标题</span><span class="tz3">2015/12/12</span></div>
-                    </div>
+                <div class="span6" id="tzgg">
+
                 </div>
                 <div class="span6">
                     <img src="img/tzright.jpg" />
@@ -292,22 +332,8 @@
             </div>
 
             <div class="row-fluid" style="margin-top: 30px">
-                <div class="span6"> <%--法律法规--%>
-                    <div class="bt" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">
-                        <span class="bbt"></span><div class="tzn"><span class="tz2">这里是标题是标题是标题这里是标题是标题是标题这里是标题是标题是标题</span><span class="tz3">2015/12/12</span></div>
-                    </div>
-                    <div class="bt" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">
-                        <span class="bbt"></span><div class="tzn"><span class="tz2">这里是标题是标题是标题</span><span class="tz3">2015/12/12</span></div>
-                    </div>
-                    <div class="bt" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">
-                        <span class="bbt"></span><div class="tzn"><span class="tz2">这里是标题是标题是标题</span><span class="tz3">2015/12/12</span></div>
-                    </div>
-                    <div class="bt" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">
-                        <span class="bbt"></span><div class="tzn"><span class="tz2">这里是标题是标题是标题</span><span class="tz3">2015/12/12</span></div>
-                    </div>
-                    <div class="bt" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'">
-                        <span class="bbt"></span><div class="tzn"><span class="tz2">这里是标题是标题是标题</span><span class="tz3">2015/12/12</span></div>
-                    </div>
+                <div class="span6" id="flfg"> <%--法律法规--%>
+                   
                 </div>
 
                 <div class="span6"> <%--表格下载--%>
