@@ -276,5 +276,21 @@ using System.Data.OleDb;
             String sql = String.Format("update {0} set {1} where {2}",TableName,SetStr,WhereStr);
             return sql;
         }
+
+        public static object ExecuteScalar(string sql, CommandType type, params SqlParameter[] parameters)
+        {
+
+            using (SqlConnection conn = new SqlConnection(ConnStr))
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = sql;
+                    cmd.Parameters.AddRange(parameters);
+                    return cmd.ExecuteScalar();
+                }
+            }
+        } 
+
     }
 

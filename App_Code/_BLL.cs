@@ -263,4 +263,83 @@ public class _BLL
         String sql = SqlHelper.GetSQLSelect_normal("", "*", "admin", spr, "=,=", "and", "id asc");
         return SqlHelper.GetTable(sql, CommandType.Text, spr);
     }
+
+    //json_zgxx 返回字段包含：id,titles,bclass,sclass　查询条件：表　article  sclass=6
+    public  DataTable zgxx  ()
+  
+    {
+        DataTable dt = null;
+
+        string sql = "select * id,titles,bclass,sclass,fbtimes from article where sclass = 6";
+
+          dt =  SqlHelper.GetTable (sql,CommandType.Text );
+
+          return dt;
+
+    }
+
+    public DataTable tzgg()
+    {
+        DataTable dt = null;
+
+        string sql = "select * id,titles,bclass,sclass,fbtimes from article where sclass = 5";
+
+        dt = SqlHelper.GetTable(sql, CommandType.Text);
+
+        return dt;
+
+    }
+
+    public DataTable flfg()
+    {
+        DataTable dt = null;
+
+        string sql = "select * id,titles,bclass,sclass,fbtimes from article where sclass = 6";
+
+        dt = SqlHelper.GetTable(sql, CommandType.Text);
+
+        return dt;
+
+    }
+
+
+
+    public DataTable tzggg()
+    {
+        DataTable dt = null;
+
+        string sql = "select * id,bclass,sclass,titles from article where bclass = 5";
+
+        dt = SqlHelper.GetTable(sql, CommandType.Text);
+
+        return dt;
+
+    }
+   
+    
+    public DataTable zgxxx()
+    {
+        DataTable dt = null;
+
+        string sql = "select * id,bclass,sclass,titles from article where bclass = 6";
+
+        dt = SqlHelper.GetTable(sql, CommandType.Text);
+
+        return dt;
+
+    }
+
+    //*类名：sclassname  查询条件：fl表里id=sid的行的names字段值
+    // String sid = "5";
+
+    public  string sclassname ()
+    {
+
+       
+        string sql = "select names from fl where id=5";
+        string name = SqlHelper.ExecuteScalar(sql,CommandType.Text).ToString();
+       
+        return name;
+
+    }
 }
